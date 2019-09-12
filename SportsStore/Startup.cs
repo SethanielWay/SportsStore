@@ -38,26 +38,24 @@ namespace SportsStore
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseStatusCodePages();
-                app.UseStaticFiles();
-                app.UseMvc(routes =>
-                {
-                    routes.MapRoute(
-                        name: "pagination",
-                        template: "Products/Page{productPage}",
-                        defaults: new { Controller = "Product", action = "List" });
-
-                    routes.MapRoute(
-                        name: "default",
-                        template: "{controller=Product}/{action=List}/{id?}");
-
-                });
-                SeedData.EnsurePopulated(app);
             }
-
-            app.Run(async (context) =>
+            app.UseStaticFiles();
+            app.UseMvc(routes =>
             {
-                await context.Response.WriteAsync("Hello World!");
+                routes.MapRoute(
+                    name: "pagination",
+                    template: "Products/Page{productPage}",
+                    defaults: new { Controller = "Product", action = "List" });
+
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Product}/{action=List}/{id?}");
+
             });
+            SeedData.EnsurePopulated(app);
         }
+
+
     }
 }
+
